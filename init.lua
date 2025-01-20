@@ -15,3 +15,9 @@ require("lazy").setup("plugins")
 
 require("settings")
 require("keymaps")
+require("plugins")
+
+-- Cambiar el color de las variables
+vim.api.nvim_set_hl(0, "@variable", { fg = "#FFD700" }) -- Color dorado para variables
+vim.api.nvim_set_hl(0, "@variable.builtin", { fg = "#FF4500", italic = true }) -- Color rojo anaranjado para variables predefinidas
+
