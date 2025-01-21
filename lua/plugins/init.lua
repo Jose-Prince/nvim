@@ -12,4 +12,5 @@ return {
 	{"nvim-lua/plenary.nvim"},
 	{"nvim-telescope/telescope.nvim"},
 	{"stevearc/oil.nvim"},
+	{"windwp/nvim-autopairs"},
 }
