@@ -1,0 +1,5 @@
+vim.api.nvim_set_keymap('n','<Esc>', ':Oil<CR>',{noremap = true})
+vim.api.nvim_set_keymap('n','<Tab>', ':Telescope oldfiles<CR>',{noremap = true})
+vim.api.nvim_set_keymap('n','<C-q>', ':Telescope find_files<CR>',{noremap = true})
+vim.api.nvim_set_keymap('','<C-s>', ':w<CR>',{noremap = true})
+vim.api.nvim_set_keymap('v','<C-c>', ':OSCYankVisual<CR>',{noremap = true})

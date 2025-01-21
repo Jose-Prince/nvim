@@ -2,9 +2,9 @@
 return {
 	{"neovim/nvim-lspconfig"},
 	{ "hrsh7th/nvim-cmp" },
-	{"L3MON4D3/LuaSnip"},      
-    	{ "hrsh7th/cmp-nvim-lsp" },
-    	{ "hrsh7th/cmp-buffer" },
+	{"L3MON4D3/LuaSnip"},
+    { "hrsh7th/cmp-nvim-lsp" },
+    { "hrsh7th/cmp-buffer" },
 	{ "hrsh7th/cmp-path" },
 	{ "nvim-lua/lsp-status.nvim" },
 	{ "python-lsp/python-lsp-server" },
@@ -13,4 +13,5 @@ return {
 	{"nvim-telescope/telescope.nvim"},
 	{"stevearc/oil.nvim"},
 	{"windwp/nvim-autopairs"},
+    {"ojroques/vim-oscyank"},
 }
