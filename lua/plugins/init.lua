@@ -11,4 +11,5 @@ return {
 	{"nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
 	{"nvim-lua/plenary.nvim"},
 	{"nvim-telescope/telescope.nvim"},
+	{"stevearc/oil.nvim"},
 }
