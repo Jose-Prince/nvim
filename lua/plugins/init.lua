@@ -14,5 +14,6 @@ return {
 	{"stevearc/oil.nvim"},
 	{"windwp/nvim-autopairs"},
     {"ojroques/vim-oscyank"},
-    {"rebelot/kanagawa.nvim"}
+    {"rebelot/kanagawa.nvim"},
+    {"nvim-tree/nvim-web-devicons", opts = {} },
 }

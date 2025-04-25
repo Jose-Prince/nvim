@@ -6,17 +6,23 @@ return {
 
       nvim_treesitter.setup {
 
-	ensure_installed = {
-	   "python",
-	},
+	    ensure_installed = {
+	        "python",
+            "typescript",
+            "tsx",
+            "javascript",
+            "html",
+            "css",
+            "json",
+	    },
 
-	auto_install = true,
+	    auto_install = true,
 
         highlight = {
-          enable = true,
-	  additional_vim_regex_highlighting = false,
-        },
-      }
+            enable = true,
+	        additional_vim_regex_highlighting = false,
+            },
+        }
 
       -- Configuración de colores
       vim.cmd [[
