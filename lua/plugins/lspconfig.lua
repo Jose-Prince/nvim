@@ -3,6 +3,7 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
       local nvim_lsp = require('lspconfig')
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
       -- Python LSP configuration (Pyright)
       nvim_lsp.pyright.setup{
@@ -26,26 +27,34 @@ return {
 
       -- Lua configuration (lua_ls)
       nvim_lsp.lua_ls.setup{
+        capabilities = capabilities,
 	    on_attach = function(client, bufnr)
-		local buf_set_keymap = vim.api.nvim_buf_set_keymap
-		local opts = { noremap=true, silent=true }
-		buf_set_keymap(bufnr, 'n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts)
-          	buf_set_keymap(bufnr, 'n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts)
-          	buf_set_keymap(bufnr, 'n', 'K', ':lua vim.lsp.buf.hover()<CR>', opts)
+    		local buf_set_keymap = vim.api.nvim_buf_set_keymap
+		    local opts = { noremap=true, silent=true }
+	    	buf_set_keymap(bufnr, 'n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts)
+            buf_set_keymap(bufnr, 'n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts)
+            buf_set_keymap(bufnr, 'n', 'K', ':lua vim.lsp.buf.hover()<CR>', opts)
         end,
-	settings = {
-		Lua = {
-			diagnostics = {
-				globals = { 'vim' },
-			},
-			workspace = {
-				library = vim.api.nvim_get_runtime_file("",true),
-			},
-			telemetry = {
-				enable = false,
-			},
-		},
-	},
+	    settings = {
+		    Lua = {
+                runtime = {
+                    version = 'LuaJIT',
+                },
+			    diagnostics = {
+				    globals = { 'vim' },
+			    },
+			    workspace = {
+				    library = vim.api.nvim_get_runtime_file("",true),
+                    checkThirdParty = false,
+			    },
+                telemetry = {
+                    enable = false,
+                },
+                completion = {
+                    callSnippet = "Replace",
+                },
+		    },
+	    },
       }
 
       -- Html configuration (html)
