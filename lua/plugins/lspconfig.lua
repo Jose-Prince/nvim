@@ -2,119 +2,43 @@ return {
   {
     "neovim/nvim-lspconfig",
     config = function()
-      local nvim_lsp = require('lspconfig')
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      -- Configure diagnostics
+      vim.diagnostic.config({
+        virtual_text = {
+          enabled = true,
+          source = "if_many",
+          prefix = "●", -- Could be '■', '▎', 'x', '●', etc.
+        },
+        signs = true,
+        underline = true,
+        update_in_insert = false,
+        severity_sort = true,
+        float = {
+          border = "rounded",
+          source = "always",
+          header = "",
+          prefix = "",
+        },
+      })
 
-      -- Python LSP configuration (Pyright)
-      nvim_lsp.pyright.setup{
-        on_attach = function(client, bufnr)
-          -- Configura las teclas para la navegación de LSP
-          local buf_set_keymap = vim.api.nvim_buf_set_keymap
-          local opts = { noremap=true, silent=true }
-          buf_set_keymap(bufnr, 'n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts)
-          buf_set_keymap(bufnr, 'n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts)
-          buf_set_keymap(bufnr, 'n', 'K', ':lua vim.lsp.buf.hover()<CR>', opts)
-        end,
-        settings = {
-          python = {
-            analysis = {
-              autoSearchPaths = true,
-              useLibraryCodeForTypes = true
-            }
-          }
-        }
-      }
-
-      -- Lua configuration (lua_ls)
-      nvim_lsp.lua_ls.setup{
-        capabilities = capabilities,
-	    on_attach = function(client, bufnr)
-    		local buf_set_keymap = vim.api.nvim_buf_set_keymap
-		    local opts = { noremap=true, silent=true }
-	    	buf_set_keymap(bufnr, 'n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts)
-            buf_set_keymap(bufnr, 'n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts)
-            buf_set_keymap(bufnr, 'n', 'K', ':lua vim.lsp.buf.hover()<CR>', opts)
-        end,
-	    settings = {
-		    Lua = {
-                runtime = {
-                    version = 'LuaJIT',
-                },
-			    diagnostics = {
-				    globals = { 'vim' },
-			    },
-			    workspace = {
-				    library = vim.api.nvim_get_runtime_file("",true),
-                    checkThirdParty = false,
-			    },
-                telemetry = {
-                    enable = false,
-                },
-                completion = {
-                    callSnippet = "Replace",
-                },
-		    },
-	    },
+      -- Define diagnostic signs
+      local signs = {
+        Error = "✘",
+        Warn = "▲",
+        Hint = "⚑",
+        Info = "»"
       }
 
-      -- Html configuration (html)
-      nvim_lsp.html.setup{
-          on_attach = function(client, bufnr)
-            local buf_set_keymap = vim.api.nvim_buf_set_keymap
-    		local opts = { noremap=true, silent=true }
-	    	buf_set_keymap(bufnr, 'n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts)
-          	buf_set_keymap(bufnr, 'n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts)
-          	buf_set_keymap(bufnr, 'n', 'K', ':lua vim.lsp.buf.hover()<CR>', opts)
-        end,
-      }
-      -- CSS configuration (cssls)
-      nvim_lsp.cssls.setup{
-        on_attach = function(client, bufnr)
-            local buf_set_keymap = vim.api.nvim_buf_set_keymap
-		    local opts = { noremap=true, silent=true }
-		    buf_set_keymap(bufnr, 'n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts)
-          	buf_set_keymap(bufnr, 'n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts)
-          	buf_set_keymap(bufnr, 'n', 'K', ':lua vim.lsp.buf.hover()<CR>', opts)
-        end,
-      }
-      -- JS configuration (ts_ls)
-      nvim_lsp.ts_ls.setup{
-          on_attach = function(client,bufnr)
-            local buf_set_keymap = vim.api.nvim_buf_set_keymap
-		    local opts = { noremap=true, silent=true }
-    		buf_set_keymap(bufnr, 'n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts)
-          	buf_set_keymap(bufnr, 'n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts)
-          	buf_set_keymap(bufnr, 'n', 'K', ':lua vim.lsp.buf.hover()<CR>', opts)
-        end,
-      }
-      -- Vue configuration (volar)
-      nvim_lsp.volar.setup {
-          cmd = {"vue-language-server", "--stdio"},
-          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'vue', 'json' },
-          init_options = {
-              typescript = {
-                  tsdk = '/usr/lib/node_modules/typescript/lib'
-              },
-          },
+      for type, icon in pairs(signs) do
+        local hl = "DiagnosticSign" .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+      end
 
-          on_attach = function(client, bufnr)
-            local buf_set_keymap = vim.api.nvim_buf_set_keymap
-		    local opts = { noremap=true, silent=true }
-    		buf_set_keymap(bufnr, 'n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts)
-          	buf_set_keymap(bufnr, 'n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts)
-          	buf_set_keymap(bufnr, 'n', 'K', ':lua vim.lsp.buf.hover()<CR>', opts)
-        end,
-      }
-      -- Go configuration (gopls)
-      nvim_lsp.gopls.setup{
-          on_attach = function(client,bufnr)
-            local buf_set_keymap = vim.api.nvim_buf_set_keymap
-		    local opts = { noremap=true, silent=true }
-    		buf_set_keymap(bufnr, 'n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts)
-          	buf_set_keymap(bufnr, 'n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts)
-          	buf_set_keymap(bufnr, 'n', 'K', ':lua vim.lsp.buf.hover()<CR>', opts)
-        end,
-      }
+      -- Keymaps for diagnostics
+      vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open diagnostic float' })
+      vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic' })
+      vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic' })
+      vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Set diagnostic loclist' })
     end
   }
 }
