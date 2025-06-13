@@ -1,7 +1,3 @@
-return {
-	{
-		"rebelot/kanagawa.nvim",
-		config = function()
 			vim.g.kanagawa_enable_bold = true
 			vim.g.kanagawa_enable_italic = true
 			vim.g.kanagawa_theme = "dragon"
@@ -16,6 +12,3 @@ return {
 			}
 
 			vim.cmd 'colorscheme kanagawa'
-		end
-	}
-}
