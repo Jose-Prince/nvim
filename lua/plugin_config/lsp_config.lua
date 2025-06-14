@@ -9,7 +9,8 @@ require("mason-lspconfig").setup({
     "lua_ls",
     "clangd",
     "rust_analyzer",
-    "gopls"
+    "gopls",
+    "pyright"
   },
   -- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed.
   -- This setting has no relation with the `ensure_installed` setting.
@@ -82,6 +83,20 @@ vim.keymap.set('n', '<leader>o', '<cmd>Lspsaga outline<CR>', { silent = true })
 -- vim.keymap.set('n', '<leader><enter>', '<cmd>Lspsaga term_toggle<CR>')
 
 local lspconfig = require("lspconfig")
+
+lspconfig.pyright.setup({
+  capabilities = capabilities,
+  settings = {
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+        diagnosticMode = "workspace", -- o "openFilesOnly"
+        typeCheckingMode = "basic" -- "off", "basic", o "strict"
+      }
+    }
+  }
+})
 
 lspconfig.lua_ls.setup {
   capabilities = capabilities,
